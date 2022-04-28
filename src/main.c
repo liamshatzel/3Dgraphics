@@ -15,6 +15,8 @@ const int N_POINTS = 9 * 9 * 9;
 vec3_t cube_points[N_POINTS]; //creating a cube of size 9x9x9
 vec2_t projected_points[N_POINTS];
 
+float fov_factor = 128;
+
 bool is_running = false;
 
 void setup(void){
@@ -66,8 +68,8 @@ void process_input(void){
 
 vec2_t project(vec3_t point){
 	vec2_t projected_point = {
-		.x = point.x,
-		.y = point.y
+		.x = (fov_factor * point.x),
+		.y = (fov_factor * point.y)
 	};
 	return projected_point;
 }
@@ -91,8 +93,8 @@ void render(void){
 	for(int i = 0; i < N_POINTS; i++){
 		vec2_t projected_point = projected_points[i];
 		draw_rect(
-			projected_point.x,
-			projected_point.y,
+			projected_point.x + (window_width/2),
+			projected_point.y + (window_height/2),
 			4,
 			4,
 			0xFFFFFF00
